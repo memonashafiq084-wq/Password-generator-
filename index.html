@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Premium Password Generator by Memona Ishaq. Create strong secure passwords instantly.">
+<meta name="author" content="Memona Ishaq">
+<title>Password Generator | Memona Ishaq</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(135deg,#1d2b64,#f8cdda);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+color:white;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+padding:15px 25px;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(10px);
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:15px;
+font-weight:500;
+}
+
+.container{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.card{
+background:rgba(255,255,255,0.15);
+padding:30px;
+border-radius:25px;
+width:95%;
+max-width:420px;
+backdrop-filter:blur(15px);
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+text-align:center;
+}
+
+h1{
+margin-top:0;
+}
+
+.password{
+background:rgba(255,255,255,0.2);
+padding:15px;
+border-radius:15px;
+margin:15px 0;
+word-break:break-all;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:15px;
+transition:.3s;
+}
+
+.generate{
+background:#00c6ff;
+color:white;
+}
+
+.copy{
+background:#ff512f;
+color:white;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.footer{
+text-align:center;
+padding:15px;
+font-size:13px;
+background:rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div><strong>Memona Ishaq</strong></div>
+<div>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="privacy.html">Privacy</a>
+<a href="contact.html">Contact</a>
+</div>
+</nav>
+
+<div class="container">
+<div class="card">
+
+<h1>Password Generator</h1>
+
+<div class="password" id="password">Click Generate</div>
+
+<label>Length: <span id="lengthValue">12</span></label>
+<input type="range" min="6" max="32" value="12" id="length" style="width:100%;">
+
+<br><br>
+
+<label><input type="checkbox" id="letters" checked> Letters</label><br>
+<label><input type="checkbox" id="numbers" checked> Numbers</label><br>
+<label><input type="checkbox" id="symbols"> Symbols</label>
+
+<button class="generate" onclick="generatePassword()">Generate</button>
+<button class="copy" onclick="copyPassword()">Copy</button>
+
+</div>
+</div>
+
+<div class="footer">
+© 2026 Memona Ishaq | Premium Tool
+</div>
+
+<script>
+
+const lengthSlider=document.getElementById("length");
+const lengthValue=document.getElementById("lengthValue");
+const passwordBox=document.getElementById("password");
+
+lengthSlider.oninput=function(){
+lengthValue.textContent=this.value;
+}
+
+function generatePassword(){
+const length=lengthSlider.value;
+const letters="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const numbers="0123456789";
+const symbols="@#$%&*!";
+
+let chars="";
+if(document.getElementById("letters").checked) chars+=letters;
+if(document.getElementById("numbers").checked) chars+=numbers;
+if(document.getElementById("symbols").checked) chars+=symbols;
+
+if(chars===""){
+passwordBox.textContent="Select option!";
+return;
+}
+
+let password="";
+for(let i=0;i<length;i++){
+password+=chars.charAt(Math.floor(Math.random()*chars.length));
+}
+
+passwordBox.textContent=password;
+}
+
+function copyPassword(){
+navigator.clipboard.writeText(passwordBox.textContent);
+alert("Copied!");
+}
+
+</script>
+
+</body>
+  </html>
