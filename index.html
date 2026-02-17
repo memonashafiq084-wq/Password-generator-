@@ -3,180 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Premium Password Generator by Memona Ishaq. Create strong secure passwords instantly.">
-<meta name="author" content="Memona Ishaq">
-<title>Password Generator | Memona Ishaq</title>
+<meta name="description" content="Memona Secure Password Generator - Create strong and secure passwords instantly with strength indicator and dark mode.">
+<meta name="keywords" content="Password Generator, Secure Password Tool, Strong Password Creator">
+<title>Memona Secure Password Generator</title>
 
 <style>
+:root{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#ffffff;
+--accent:#3b82f6;
+}
+
+.light{
+--bg:#f1f5f9;
+--card:#ffffff;
+--text:#111;
+}
 
 body{
 margin:0;
-font-family:Segoe UI;
-background:linear-gradient(135deg,#1d2b64,#f8cdda);
-min-height:100vh;
-display:flex;
-flex-direction:column;
-color:white;
+font-family:Arial, sans-serif;
+background:var(--bg);
+color:var(--text);
+transition:0.3s;
 }
 
 nav{
 display:flex;
 justify-content:space-between;
-padding:15px 25px;
+padding:20px 10%;
 background:rgba(0,0,0,0.2);
-backdrop-filter:blur(10px);
 }
 
-nav a{
+nav button{
+background:var(--accent);
+border:none;
+padding:8px 15px;
 color:white;
-text-decoration:none;
-margin-left:15px;
-font-weight:500;
+border-radius:20px;
+cursor:pointer;
+}
+
+.hero{
+text-align:center;
+padding:50px 20px;
 }
 
 .container{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-.card{
-background:rgba(255,255,255,0.15);
+max-width:600px;
+margin:20px auto;
+background:var(--card);
 padding:30px;
-border-radius:25px;
-width:95%;
-max-width:420px;
-backdrop-filter:blur(15px);
-box-shadow:0 10px 40px rgba(0,0,0,0.3);
-text-align:center;
+border-radius:20px;
+box-shadow:0 20px 50px rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
 }
 
-h1{
-margin-top:0;
-}
-
-.password{
-background:rgba(255,255,255,0.2);
+.password-box{
+background:#f1f5f9;
+color:#111;
 padding:15px;
-border-radius:15px;
-margin:15px 0;
+border-radius:10px;
 word-break:break-all;
+margin-bottom:10px;
 }
 
 button{
-width:100%;
 padding:12px;
-margin-top:10px;
 border:none;
-border-radius:12px;
+border-radius:10px;
 cursor:pointer;
-font-size:15px;
-transition:.3s;
+font-weight:bold;
 }
 
 .generate{
-background:#00c6ff;
+background:var(--accent);
 color:white;
+width:100%;
+margin-top:15px;
 }
 
 .copy{
-background:#ff512f;
+background:#16a34a;
 color:white;
+margin-bottom:10px;
 }
 
-button:hover{
-transform:scale(1.05);
+.options label{
+display:block;
+margin-top:8px;
 }
 
-.footer{
+.strength{
+height:10px;
+background:#ddd;
+margin-top:10px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.strength-bar{
+height:100%;
+width:0%;
+transition:0.4s ease;
+}
+
+footer{
 text-align:center;
-padding:15px;
-font-size:13px;
-background:rgba(0,0,0,0.2);
+padding:30px;
+opacity:0.7;
 }
-
 </style>
 </head>
-
 <body>
 
 <nav>
-<div><strong>Memona Ishaq</strong></div>
-<div>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="privacy.html">Privacy</a>
-<a href="contact.html">Contact</a>
-</div>
+<h2>Memona Secure</h2>
+<button onclick="toggleMode()">Toggle Mode</button>
 </nav>
 
+<section class="hero">
+<h1>Advanced Password Generator</h1>
+<p>Generate ultra-secure passwords instantly</p>
+</section>
+
 <div class="container">
-<div class="card">
 
-<h1>Password Generator</h1>
+<div class="password-box" id="password">Click Generate</div>
+<button class="copy" onclick="copyPassword()">Copy Password</button>
 
-<div class="password" id="password">Click Generate</div>
+<label>Password Length: <span id="lengthVal">12</span></label>
+<input type="range" min="6" max="40" value="12" id="length">
 
-<label>Length: <span id="lengthValue">12</span></label>
-<input type="range" min="6" max="32" value="12" id="length" style="width:100%;">
-
-<br><br>
-
-<label><input type="checkbox" id="letters" checked> Letters</label><br>
-<label><input type="checkbox" id="numbers" checked> Numbers</label><br>
-<label><input type="checkbox" id="symbols"> Symbols</label>
-
-<button class="generate" onclick="generatePassword()">Generate</button>
-<button class="copy" onclick="copyPassword()">Copy</button>
-
-</div>
+<div class="options">
+<label><input type="checkbox" id="lower" checked> Lowercase</label>
+<label><input type="checkbox" id="upper" checked> Uppercase</label>
+<label><input type="checkbox" id="number" checked> Numbers</label>
+<label><input type="checkbox" id="symbol"> Symbols</label>
 </div>
 
-<div class="footer">
-© 2026 Memona Ishaq | Premium Tool
+<button class="generate" onclick="generatePassword()">Generate Secure Password</button>
+
+<div class="strength">
+<div class="strength-bar" id="strengthBar"></div>
 </div>
+
+</div>
+
+<footer>
+© 2026 Memona Secure | All Rights Reserved
+</footer>
 
 <script>
-
 const lengthSlider=document.getElementById("length");
-const lengthValue=document.getElementById("lengthValue");
+const lengthVal=document.getElementById("lengthVal");
 const passwordBox=document.getElementById("password");
+const strengthBar=document.getElementById("strengthBar");
 
-lengthSlider.oninput=function(){
-lengthValue.textContent=this.value;
-}
+lengthSlider.oninput=()=>lengthVal.textContent=lengthSlider.value;
 
 function generatePassword(){
-const length=lengthSlider.value;
-const letters="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const numbers="0123456789";
-const symbols="@#$%&*!";
-
+let length=lengthSlider.value;
 let chars="";
-if(document.getElementById("letters").checked) chars+=letters;
-if(document.getElementById("numbers").checked) chars+=numbers;
-if(document.getElementById("symbols").checked) chars+=symbols;
+if(lower.checked) chars+="abcdefghijklmnopqrstuvwxyz";
+if(upper.checked) chars+="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+if(number.checked) chars+="0123456789";
+if(symbol.checked) chars+="!@#$%^&*()_+";
 
-if(chars===""){
-passwordBox.textContent="Select option!";
-return;
-}
+if(chars===""){passwordBox.textContent="Select option!";return;}
 
-let password="";
+let pass="";
 for(let i=0;i<length;i++){
-password+=chars.charAt(Math.floor(Math.random()*chars.length));
+pass+=chars[Math.floor(Math.random()*chars.length)];
 }
 
-passwordBox.textContent=password;
+passwordBox.textContent=pass;
+checkStrength(pass);
+}
+
+function checkStrength(pass){
+let strength=0;
+if(pass.length>=8) strength+=25;
+if(/[A-Z]/.test(pass)) strength+=25;
+if(/[0-9]/.test(pass)) strength+=25;
+if(/[^A-Za-z0-9]/.test(pass)) strength+=25;
+
+strengthBar.style.width=strength+"%";
+
+if(strength<=25) strengthBar.style.background="red";
+else if(strength<=50) strengthBar.style.background="orange";
+else if(strength<=75) strengthBar.style.background="yellow";
+else strengthBar.style.background="green";
 }
 
 function copyPassword(){
 navigator.clipboard.writeText(passwordBox.textContent);
-alert("Copied!");
+alert("Password Copied!");
 }
 
+function toggleMode(){
+document.body.classList.toggle("light");
+}
 </script>
 
 </body>
-  </html>
+</html>
