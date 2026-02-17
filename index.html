@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Memona Secure Password Generator - Create strong and secure passwords instantly with strength indicator and dark mode.">
-<meta name="keywords" content="Password Generator, Secure Password Tool, Strong Password Creator">
+<meta name="description" content="Memona Secure Password Generator - Create strong and secure passwords instantly.">
 <title>Memona Secure Password Generator</title>
 
 <style>
@@ -32,8 +31,21 @@ transition:0.3s;
 nav{
 display:flex;
 justify-content:space-between;
-padding:20px 10%;
-background:rgba(0,0,0,0.2);
+align-items:center;
+padding:15px 8%;
+background:rgba(0,0,0,0.3);
+flex-wrap:wrap;
+}
+
+nav h2{
+margin:0;
+}
+
+nav .links a{
+color:white;
+text-decoration:none;
+margin:0 10px;
+font-weight:bold;
 }
 
 nav button{
@@ -43,6 +55,7 @@ padding:8px 15px;
 color:white;
 border-radius:20px;
 cursor:pointer;
+margin-left:10px;
 }
 
 .hero{
@@ -57,7 +70,6 @@ background:var(--card);
 padding:30px;
 border-radius:20px;
 box-shadow:0 20px 50px rgba(0,0,0,0.4);
-backdrop-filter:blur(10px);
 }
 
 .password-box{
@@ -109,6 +121,12 @@ width:0%;
 transition:0.4s ease;
 }
 
+.section{
+max-width:900px;
+margin:60px auto;
+padding:20px;
+}
+
 footer{
 text-align:center;
 padding:30px;
@@ -120,10 +138,17 @@ opacity:0.7;
 
 <nav>
 <h2>Memona Secure</h2>
+
+<div class="links">
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#privacy">Privacy</a>
+<a href="#contact">Contact</a>
 <button onclick="toggleMode()">Toggle Mode</button>
+</div>
 </nav>
 
-<section class="hero">
+<section class="hero" id="home">
 <h1>Advanced Password Generator</h1>
 <p>Generate ultra-secure passwords instantly</p>
 </section>
@@ -150,6 +175,27 @@ opacity:0.7;
 </div>
 
 </div>
+
+<section class="section" id="about">
+<h2>About Us</h2>
+<p>
+Memona Secure Password Generator is designed to help users create strong, random, and secure passwords directly in their browser.
+We do not store or track any password data.
+</p>
+</section>
+
+<section class="section" id="privacy">
+<h2>Privacy Policy</h2>
+<p>
+Your privacy is important to us. This tool works completely on your device.
+No passwords are saved, stored, or transmitted to any server.
+</p>
+</section>
+
+<section class="section" id="contact">
+<h2>Contact Us</h2>
+<p>Email: your@email.com</p>
+</section>
 
 <footer>
 © 2026 Memona Secure | All Rights Reserved
